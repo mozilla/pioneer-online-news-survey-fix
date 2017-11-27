@@ -1,0 +1,17 @@
+{
+  "name": "pioneer-online-news-survey-fix",
+  "version": "1.0.0",
+  "description": "A patch for the Pioneer Online News study.",
+  "scripts": {
+    "build": "XPI=pioneer-online-news-survey-fix@pioneer.mozilla.org.xpi bash ./bin/make-xpi.sh"
+  },
+  "keywords": [],
+  "author": "Mozilla",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-plugin-mozilla": "^0.4.9",
+    "eslint-plugin-no-unsanitized": "^2.0.1",
+    "mustache": "^2.3.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "addon": {
+    "version": "1.0.0",
+    "id": "pioneer-online-news-survey-fix@pioneer.mozilla.org",
+    "name": "Pioneer Online News Study Patch",
+    "minVersion": "55.0",
+    "maxVersion": "*",
+    "multiprocessCompatible": true,
+    "hasEmbeddedWebExtension": false,
+    "creator": "Mozilla",
+    "description": "A patch for the Pioneer Online News study.",
+    "chrome": "pioneer-online-news-survey-fix"
+  }
+}
