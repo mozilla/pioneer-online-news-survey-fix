@@ -16,7 +16,7 @@ XPCOMUtils.defineLazyModuleGetter(
   this, "State", "resource://pioneer-online-news-survey-fix/lib/State.jsm"
 );
 XPCOMUtils.defineLazyModuleGetter(
-  this, "StudyUninstaller", "resource://pioneer-online-news-survey-fix/lib/StudyUninstaller.jsm",
+  this, "StudyAddonManager", "resource://pioneer-online-news-survey-fix/lib/StudyAddonManager.jsm",
 );
 XPCOMUtils.defineLazyModuleGetter(
   this, "SurveyWatcher", "resource://pioneer-online-news-survey-fix/lib/SurveyWatcher.jsm"
@@ -33,17 +33,29 @@ const REASONS = {
   ADDON_DOWNGRADE:  8, // The add-on is being downgraded.
 };
 const UI_AVAILABLE_NOTIFICATION = "sessionstore-windows-restored";
+const EXPIRATION_DATE_PREF = "extensions.pioneer-online-news-patch.expirationDate";
 
 this.Bootstrap = {
   install() {},
 
   async startup(data, reason) {
-    // If the study is not installed uninstall this addon.
-    if (!StudyUninstaller.isInstalled()) {
+    // Always set EXPIRATION_DATE_PREF if it not set, even if outside of install.
+    // This is a failsafe if opt-out expiration doesn't work, so should be resilient.
+    let expirationDate = PrefUtils.getLongPref(EXPIRATION_DATE_PREF, 0);
+    if (!expirationDate) {
+      const phases = Object.values(Config.phases);
+      const studyLength = phases.map(p => p.duration || 0).reduce((a, b) => a + b);
+      expirationDate = Date.now() + studyLength;
+      PrefUtils.setLongPref(EXPIRATION_DATE_PREF, expirationDate);
+    }
+
+    // Check if the study has expired
+    if (Date.now() > expirationDate) {
       const addon = await AddonManager.getAddonByID(Config.addonId);
       if (addon) {
         addon.uninstall();
       }
+      return;
     }
 
     // If the app is starting up, wait until the UI is available before finishing
@@ -73,16 +85,17 @@ this.Bootstrap = {
   },
 
   shutdown(data, reason) {
-    ActiveURIService.shutdown();
-
     if (reason === REASONS.ADDON_UNINSTALL) {
+      // Uninstall the online news study addon if we are uninstalling this addon.
       StudyUninstaller.uninstall();
     }
+
+    ActiveURIService.shutdown();
 
     Cu.unload("resource://pioneer-online-news-survey-fix/Config.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/ActiveURIService.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/State.jsm");
-    Cu.unload("resource://pioneer-online-news-survey-fix/lib/StudyUninstaller.jsm");
+    Cu.unload("resource://pioneer-online-news-survey-fix/lib/StudyAddonManager.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/SurveyWatcher.jsm");
   },
 
