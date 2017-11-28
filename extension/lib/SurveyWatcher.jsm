@@ -26,8 +26,9 @@ this.SurveyWatcher = {
     State.save(state);
   },
 
-  onFocusURI(data) {
-    if (StudyAddonManager.isInstalled() && data.uri && this.uriMatchesSurveyURL(data.uri)) {
+  async onFocusURI(data) {
+    const isStudyInstalled = await StudyAddonManager.isInstalled();
+    if (isStudyInstalled && data.uri && this.uriMatchesSurveyURL(data.uri)) {
       this.endSurvey();
     }
   },
