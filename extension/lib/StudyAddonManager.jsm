@@ -5,13 +5,13 @@ XPCOMUtils.defineLazyModuleGetter(
   this, "AddonManager", "resource://gre/modules/AddonManager.jsm"
 );
 
-this.EXPORTED_SYMBOLS = ["StudyUninstaller"];
+this.EXPORTED_SYMBOLS = ["StudyAddonManager"];
 
 const STUDY_ADDON_ID = "pioneer-study-online-news@pioneer.mozilla.org";
 const EXPIRATION_DATE_PREF = "extensions.pioneer-online-news.expirationDate";
 
 
-this.StudyUninstaller = {
+this.StudyAddonManager = {
   async startup() {
     const isEligible = await this.isUserOptedIn();
     if (!isEligible) {
