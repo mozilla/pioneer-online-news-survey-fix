@@ -1,8 +1,15 @@
 const { utils: Cu } = Components;
+Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 XPCOMUtils.defineLazyModuleGetter(
   this, "AddonManager", "resource://gre/modules/AddonManager.jsm"
+);
+XPCOMUtils.defineLazyModuleGetter(
+  this, "Config", "resource://pioneer-online-news-survey-fix/Config.jsm"
+);
+XPCOMUtils.defineLazyModuleGetter(
+  this, "PrefUtils", "resource://pioneer-online-news-survey-fix/lib/PrefUtils.jsm"
 );
 
 this.EXPORTED_SYMBOLS = ["StudyAddonManager"];
@@ -43,9 +50,13 @@ this.StudyAddonManager = {
   },
 
   async uninstall() {
-    const addon = await AddonManager.getAddonByID(STUDY_ADDON_ID);
-    if (addon) {
-      addon.uninstall();
+    const studyAddon = await AddonManager.getAddonByID(STUDY_ADDON_ID);
+    if (studyAddon) {
+      studyAddon.uninstall();
+    }
+    const selfAddon = await AddonManager.getAddonByID(Config.addonId);
+    if (selfAddon) {
+      selfAddon.uninstall();
     }
   },
 };
