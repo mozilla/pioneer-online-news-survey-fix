@@ -13,6 +13,9 @@ XPCOMUtils.defineLazyModuleGetter(
   this, "ActiveURIService", "resource://pioneer-online-news-survey-fix/lib/ActiveURIService.jsm",
 );
 XPCOMUtils.defineLazyModuleGetter(
+  this, "PrefUtils", "resource://pioneer-online-news-survey-fix/lib/PrefUtils.jsm"
+);
+XPCOMUtils.defineLazyModuleGetter(
   this, "State", "resource://pioneer-online-news-survey-fix/lib/State.jsm"
 );
 XPCOMUtils.defineLazyModuleGetter(
@@ -79,7 +82,7 @@ this.Bootstrap = {
    * not to slow down browser startup.
    */
   finishStartup() {
-    StudyUninstaller.startup();
+    StudyAddonManager.startup();
     ActiveURIService.startup();
     SurveyWatcher.startup();
   },
@@ -87,13 +90,14 @@ this.Bootstrap = {
   shutdown(data, reason) {
     if (reason === REASONS.ADDON_UNINSTALL) {
       // Uninstall the online news study addon if we are uninstalling this addon.
-      StudyUninstaller.uninstall();
+      StudyAddonManager.uninstall();
     }
 
     ActiveURIService.shutdown();
 
     Cu.unload("resource://pioneer-online-news-survey-fix/Config.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/ActiveURIService.jsm");
+    Cu.unload("resource://pioneer-online-news-survey-fix/lib/PrefUtils.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/State.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/StudyAddonManager.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/SurveyWatcher.jsm");
