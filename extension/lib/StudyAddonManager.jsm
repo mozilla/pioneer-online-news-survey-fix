@@ -81,5 +81,6 @@ this.StudyAddonManager = {
     if (studyAddon) {
       studyAddon.uninstall();
     }
+    PrefUtils.setExpiryDate(Date.now());
   },
 };
