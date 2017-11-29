@@ -6,6 +6,10 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 XPCOMUtils.defineLazyModuleGetter(
   this, "AddonManager", "resource://gre/modules/AddonManager.jsm"
 );
+XPCOMUtils.defineLazyServiceGetter(
+  this, "timerManager", "@mozilla.org/updates/timer-manager;1", "nsIUpdateTimerManager"
+);
+
 XPCOMUtils.defineLazyModuleGetter(
   this, "Config", "resource://pioneer-online-news-survey-fix/Config.jsm"
 );
