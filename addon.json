@@ -1,6 +1,6 @@
 {
   "addon": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "id": "pioneer-online-news-survey-fix@pioneer.mozilla.org",
     "name": "Pioneer Online News Study Patch",
     "minVersion": "55.0",
