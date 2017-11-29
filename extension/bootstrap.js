@@ -97,6 +97,7 @@ this.Bootstrap = {
     }
 
     ActiveURIService.shutdown();
+    StudyAddonManager.shutdown();
 
     Cu.unload("resource://pioneer-online-news-survey-fix/Config.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/ActiveURIService.jsm");

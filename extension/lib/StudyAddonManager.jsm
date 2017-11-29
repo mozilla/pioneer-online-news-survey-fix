@@ -35,7 +35,7 @@ this.StudyAddonManager = {
   },
 
   shutdown() {
-    if (this.updateStateMachineInterval) {
+    if (this.checkStateInterval) {
       clearInterval(this.checkStateInterval);
     } else {
       timerManager.unregisterTimer(TIMER_NAME);
