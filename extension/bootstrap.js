@@ -7,6 +7,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 XPCOMUtils.defineLazyModuleGetter(
+  this, "AddonManager", "resource://gre/modules/AddonManager.jsm"
+);
+XPCOMUtils.defineLazyModuleGetter(
   this, "Config", "resource://pioneer-online-news-survey-fix/Config.jsm"
 );
 XPCOMUtils.defineLazyModuleGetter(
@@ -36,7 +39,6 @@ const REASONS = {
   ADDON_DOWNGRADE:  8, // The add-on is being downgraded.
 };
 const UI_AVAILABLE_NOTIFICATION = "sessionstore-windows-restored";
-const EXPIRATION_DATE_PREF = "extensions.pioneer-online-news-patch.expirationDate";
 
 this.Bootstrap = {
   install() {},
@@ -44,12 +46,12 @@ this.Bootstrap = {
   async startup(data, reason) {
     // Always set EXPIRATION_DATE_PREF if it not set, even if outside of install.
     // This is a failsafe if opt-out expiration doesn't work, so should be resilient.
-    let expirationDate = PrefUtils.getLongPref(EXPIRATION_DATE_PREF, 0);
+    let expirationDate = PrefUtils.getExpiryDate();
     if (!expirationDate) {
       const phases = Object.values(Config.phases);
       const studyLength = phases.map(p => p.duration || 0).reduce((a, b) => a + b);
       expirationDate = Date.now() + studyLength;
-      PrefUtils.setLongPref(EXPIRATION_DATE_PREF, expirationDate);
+      PrefUtils.setExpiryDate(expirationDate);
     }
 
     // Check if the study has expired
@@ -94,6 +96,7 @@ this.Bootstrap = {
     }
 
     ActiveURIService.shutdown();
+    StudyAddonManager.shutdown();
 
     Cu.unload("resource://pioneer-online-news-survey-fix/Config.jsm");
     Cu.unload("resource://pioneer-online-news-survey-fix/lib/ActiveURIService.jsm");

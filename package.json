@@ -1,6 +1,6 @@
 {
   "name": "pioneer-online-news-survey-fix",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A patch for the Pioneer Online News study.",
   "scripts": {
     "build": "XPI=pioneer-online-news-survey-fix@pioneer.mozilla.org.xpi bash ./bin/make-xpi.sh"
