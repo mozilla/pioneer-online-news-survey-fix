@@ -7,6 +7,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 XPCOMUtils.defineLazyModuleGetter(
+  this, "AddonManager", "resource://gre/modules/AddonManager.jsm"
+);
+XPCOMUtils.defineLazyModuleGetter(
   this, "Config", "resource://pioneer-online-news-survey-fix/Config.jsm"
 );
 XPCOMUtils.defineLazyModuleGetter(

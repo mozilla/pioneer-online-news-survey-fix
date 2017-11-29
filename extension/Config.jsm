@@ -8,6 +8,7 @@ const PRETREATMENT_DURATION_PREF = "extensions.pioneer-online-news.preTreatmentD
 const TREATMENT_DURATION_PREF = "extensions.pioneer-online-news.treatmentDuration";
 const POSTTREATMENT_DURATION_PREF = "extensions.pioneer-online-news.postTreatmentDuration";
 const POSTSTUDY_DURATION_PREF = "extensions.pioneer-online-news.postStudyDuration";
+const UPDATE_TIMER_PREF = "extensions.pioneer-online-news.updateTimerInterval";
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -17,6 +18,8 @@ const WEEK = 7 * DAY;
 
 const Config = {
   addonId: "pioneer-online-news-survey-fix@pioneer.mozilla.org",
+
+  updateTimerInterval: Services.prefs.getIntPref(UPDATE_TIMER_PREF, 1 * DAY),
 
   firstPhase: "preTreatment",
 
