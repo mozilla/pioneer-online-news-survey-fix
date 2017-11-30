@@ -40,7 +40,7 @@ In addition we should perform the following tests:
 #### Test that the survey doorhanger is not reshown after clicking through
 
 Before beginning this test you will probably want to set 
-`extensions.pioneer-online-news.logSubmissionInterval` to something smaller
+`extensions.pioneer-online-news.showDoorhangerInterval` to something smaller
 so that the survey doorhanger is reshown quicker than 24 hours.
 
 You will also need to update the 
@@ -56,7 +56,7 @@ also when the button is not clicked.
 
 #### Test that the addon is correctly uninstalled after opting out
 
-After installing all three addons, simply uninstally the Firefox Pioneer
+After installing all three addons, simply uninstall the Firefox Pioneer
 addon and restart the browser. All three addons should now be uninstalled.
 
 #### Test that the addon is correctly uninstalled after expiry
